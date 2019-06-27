@@ -24,14 +24,7 @@
   {% unless product.featured_image == blank %}
     <div class="supports-js" style="max-width: {{ 600 | times: product.featured_image.aspect_ratio | round }}px; margin: 0 auto;">
       <a href="{{ product.url | within: collection }}" class="product__image-wrapper product__image-wrapper--loading" style="padding-top:{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%;" title="{{ product.title | escape }}" data-image-link>
-        <img class="product__image lazyload"
-             alt="{{ product.featured_image.alt | escape }}"
-             style="max-width: {{ 600 | times: product.featured_image.aspect_ratio | round }}px; max-height: 600px;"
-             data-src="{{ img_url }}"
-             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-             data-aspectratio="{{ product.featured_image.aspect_ratio }}"
-             data-sizes="auto"
-             data-image>
+        <img class="product__image lazyload" alt="{{ product.featured_image.alt | escape }}" style="max-width: {{ 600 | times: product.featured_image.aspect_ratio | round }}px; max-height: 600px;" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ product.featured_image.aspect_ratio }}" data-sizes="auto" data-image>
       </a>
     </div>
   {% else %}
@@ -80,12 +73,7 @@
           {{ product.price | money }}
         {% endif %}
       </span>
-    
-    
-    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
 
-    
-    
     {% endif %}
 
     {% if product.compare_at_price > product.price %}
@@ -94,7 +82,15 @@
     {% endif %}
 
     {% if on_sale %}
-      <span class="badge badge--sale"><span>{{ 'products.product.on_sale' | t }}</span></span>
+      <span class="badge badge--sale">
+        <span>{{ 'products.product.on_sale' | t }}</span>
+      </span>
+    {% endif %}
+
+    {% if product.type =="PreOrder" %}
+      <span class="badge badge--pre-order">
+        <span>{{ 'products.product.pre_order' | t }}</span>
+      </span>
     {% endif %}
 
     {% comment %}
@@ -104,8 +100,11 @@
     {% endcomment %}
 
     {% if sold_out %}
-      — <strong class="sold-out-text">{{ 'products.product.sold_out' | t }}</strong>
+      —
+      <strong class="sold-out-text">{{ 'products.product.sold_out' | t }}</strong>
     {% endif %}
+
+    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
 
   </div>
 </div>
